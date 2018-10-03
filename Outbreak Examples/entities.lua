@@ -5,9 +5,8 @@ entity_interact = function(id)
     contactId = id
 
     if id == 5 then
-        Character.sendFloatingDamage(client, 5, 10)
-
-        --contactAvailable(id)
+       --Character.sendFloatingDamage(client, 5, 10)
+        contactAvailable(id)
     elseif id == 3 then
         contactAvailable(id)
     elseif id == 2 then
