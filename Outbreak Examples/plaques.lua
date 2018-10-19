@@ -1,16 +1,9 @@
--- contactTable starts as an empty global table and is accessable from all scripts.
 
-plaque_visited = function(id)
-    print("plaque_visited: " .. tostring(id) .. ",")
-    if id == 1852042661 then
+plaque_visited = function(id, loc)
 
-    elseif id == 1774750002 then
-        return "Police callbox" 
-    elseif id == 1518617916 then
-        --do nothing, Message handled in locations.lua
-    else
-        MapClientSession.simple_dialog(client, "plaque_visited: " .. tostring(id))
-    end
-
+    printDebug("Plaque Id: " .. tostring(id) .. " X: " .. round2(loc.x, 4) .. " Y: " .. round2(loc.y, 4) .. " Z: " .. round2(loc.z, 4))
+    vec3Ptest = vec3.new(round2(loc.x, 4),round2(loc.y, 4),round2(loc.z, 4))
+    Character.faceLocation(client.m_ent, vec3Ptest)
+  
     return ""
 end

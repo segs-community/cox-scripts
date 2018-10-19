@@ -1,24 +1,37 @@
--- contactTable starts as an empty global table and is accessable from all scripts.
 
-location_visited = function(id)
-    print("location_visited: " .. tostring(id) .. ",")
-    print(contactTable)
+location_visited = function(id, location )
+   printDebug("Location Id: " .. tostring(id) .. " X: " .. round2(location.x, 4) .. " Y: " .. round2(location.y, 4) .. " Z: " .. round2(location.z, 4))
+   
+   vec3Test = vec3.new(round2(location.x, 4), round2(location.y, 4), round2(location.z, 4))
+   Character.faceLocation(client.m_ent, vec3Test) 
 
-    if(id == 1518617916 and contactTable.flint.progress == 0.2) then
-        contactTable.flint.progress = 0.3
+    if(id == 1518617916 and flintContact.currentStanding == 2) then
+        flintContact.currentStanding = 3
+        flintContact.canUseCell = true
+        Character.addUpdateContactList(client, flintContact, flintLocation)
         Character.giveInsp(client,"awaken");
         message = [[<td align=center><b>Medicom and Defeat</b></td><br><br><br>
         The Medicom is a state of the art analysis and healing device. It will analyze the current medical status of a friendly target and teleport them to the nearest hospital upon defeat. Equipping every Hero with a Medicom patch is the only thing keeping Paragon City from being overrun.<br><br>
         If you have an associate that can revive you, you may wait for that instead by not clicking OK in the dialog box that appears upon defeat.<br><br>]]
         MapClientSession.simple_dialog(client,message)
     elseif id == 1852042661 then
-        MapClientSession.simple_dialog(client,"Information Box.<br><br>Have 100 INF!")
+        MapClientSession.simple_dialog(client,"Information Box.")
         Character.giveInf(client, 100);
-        --Character.giveXp(client,100)
+        Character.giveXp(client,100)
    
     else  
-        MapClientSession.simple_dialog(client,"location_visited: " .. tostring(id))
+        MapClientSession.simple_dialog(client,"location_visited: " .. tostring(location.id) .. " Loc: " .. round2(location.loc.x, 4))
     end
     
     return ""
 end
+
+--Helper functions
+function round(num, numDecimalPlaces)
+    local mult = 10^(numDecimalPlaces or 0)
+    return math.floor(num * mult + 0.5) / mult
+  end
+
+  function round2(num, numDecimalPlaces)
+    return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+  end
