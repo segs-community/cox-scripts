@@ -1,23 +1,18 @@
-contactId = 0
-
-flintContact = 0;
 flintLocation = vec3.new(-62.0, 0.0, 182.0)
-
-parksContact = 0;
 parksLocation = vec3.new(-83.0, 0.0, 1334.0)
+contactId = 0; -- This could be removed if the dialog button included which contact/entity the player was interacting with.
 
-contact_list = function(contacts)
-    
-    return ""
-end
+entity_interact = function(id, location)
 
-entity_interact = function(id)
-    printDebug("entity id " .. tostring(id))
+    if location ~= nil then
+        printDebug("entity id " .. tostring(id) .. " location info:  x: " .. tostring(location.x) .. " y: " .. tostring(location.y) .. " z: " .. tostring(location.z))
+    else
+        printDebug("entity id " .. tostring(id))
+    end
+
     contactId = id
 
-    if id == 5 or id == 16781309 then
-        id = 5 -- id 16781309 is from the call button. Its a different entity than normal.
-        contactId = 5
+    if id == 5 then
         contactAvailable(id)
     elseif id == 3 then
         contactAvailable(id)
@@ -50,9 +45,29 @@ set_target = function(id)
     return ""
 end
 
+contact_call = function(contactIndex)
+    printDebug("Contact Call. contactIndex: " .. tostring(contactIndex))
+    local index = contactIndex + 1 -- Lua starts indexes at 1
+
+    local contact = vContacts[index]
+    if contact.npcId == 1939 then
+        contactId = 5
+        contactAvailable(5)
+    elseif contact.npcId == 1940 then
+        contactId = 3
+        contactAvailable(3)
+    end
+
+    return ""
+end
+
 function contactAvailable(id)
+    flintContact = FindContactByNpcId(1939)
+    parksContact = FindContactByNpcId(1940)
+
     if id == 5 then
-        if flintContact == 0 then
+        if flintContact == false then
+            printDebug("flintContact is false")
             flintContact = Contact.new()
             flintContact.npcId = 1939
             flintContact.name = "Officer Flint"
@@ -71,7 +86,7 @@ function contactAvailable(id)
     elseif (id == 3 and flintContact.currentStanding >= 1) then
         drMillerDialogs(nil)
     elseif id == 2 then
-        if parksContact == 0 then
+        if parksContact == false then
             parksContact = Contact.new()
             parksContact.npcId = 1940
             parksContact.name = "Officer Parks"
@@ -83,7 +98,7 @@ function contactAvailable(id)
             parksContact.friendThreshold = 2
             parksContact.confidantThreshold = 3
             parksContact.completeThreshold = 4
-            parksContact.canUseCell = false
+            parksContact.canUseCell = true
             Character.addUpdateContactList(client, parksContact, parksLocation)
         end
         officerParksDialogs(nil)
@@ -146,8 +161,7 @@ function officerFlintDialogs(buttonId)
         he's marked on your map and compass.<br><br>
         <color #2189b9>The Navigation Window is at the top center of your screen.</color><br><br>
         <img src="Tut_Compass"><br><br>
-        <color #2189b9>You have been issues a clue. You can learn more about the clue by clicking the Clues button on your Nav window. 
-        Whenever you are issues new Clues, you can read more about them there as well.</color><br><br><br>]] 
+       <br><br>]] 
         local buttons = {
             button1 = {"Click here to accept this task" ,"CONTACTLINK_ACCEPTLONG"},
             button2 = {"Talk about what else is going on","CONTACTLINK_ABOUT"},
@@ -185,7 +199,7 @@ function officerFlintDialogs(buttonId)
         parksContact.friendThreshold = 2
         parksContact.confidantThreshold = 3
         parksContact.completeThreshold = 4
-        parksContact.canUseCell = false
+        parksContact.canUseCell = true
         Character.addUpdateContactList(client, parksContact, parksLocation)
         
     elseif buttonId == 20 then
@@ -208,8 +222,12 @@ function officerFlintDialogs(buttonId)
         MapClientSession.contact_dialog(client,message,buttons)
     elseif buttonId == 7 then
         flintContact.currentStanding = 1
+        Character.addUpdateContactList(client, flintContact, flintLocation)
         MapClientSession.sendFloatingInfo(client,5)
-        message = [[<img src="npc:1939" align="left">Dr. Miller is just down the street. Give him the sample,and see if he has anything further for you.]]
+
+        message = [[<img src="npc:1939" align="left">Dr. Miller is just down the street. Give him the sample,and see if he has anything further for you.<br><br>
+        <color #2189b9>You have been issues a clue. You can learn more about the clue by clicking the Clues button on your Nav window. 
+        Whenever you are issues new Clues, you can read more about them there as well.</color><br>]]
         local buttons = {
             button1 = {"Ask about this contact", "CONTACTLINK_ABOUT"},
             button2 = {"",""},
@@ -264,7 +282,7 @@ end
 
 function officerParksDialogs(buttonId)
     if buttonId == nil then
-        if(flintContact == 0 or flintContact.currentStanding ~= 4 ) then
+        if(flintContact == false or flintContact.currentStanding ~= 4 ) then
             message = [[<img src="npc:1940" align="left"><br><br>You need to finish your work for Officer Flint before you can help me.]]
             local buttons = {
                 button1 = {"Leave","CONTACTLINK_BYE"}
@@ -396,4 +414,39 @@ function macReady(buttonId)
     else
 
     end
+end
+
+
+
+
+
+
+
+--Global Helper Functions
+
+function FindContactByName(item)
+    local contact = false
+    printDebug("Item to find: " .. item)
+   for key, value in pairs(vContacts) do
+        printDebug(value.name)
+        if value.name == item then
+            contact = value
+            break
+        end
+    end
+    return contact
+end
+
+function FindContactByNpcId(npcId)
+    local contact = false
+    printDebug("NpcId to find: " .. npcId)
+   for key, value in pairs(vContacts) do
+        printDebug(tostring(value.npcId))
+        if value.npcId == npcId then
+            printDebug("NpcId found")
+            contact = value
+            break
+        end
+    end
+    return contact
 end
