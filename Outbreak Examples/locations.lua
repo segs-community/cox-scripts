@@ -5,6 +5,8 @@ location_visited = function(id, location )
    vec3Test = vec3.new(round2(location.x, 4), round2(location.y, 4), round2(location.z, 4))
    Character.faceLocation(client.m_ent, vec3Test) 
 
+   flintContact = FindContactByNpcId(1939) -- If parks used a location, his object would need to be updated here.
+
     if(id == 1518617916 and flintContact.currentStanding == 2) then
         flintContact.currentStanding = 3
         flintContact.canUseCell = true
@@ -20,7 +22,7 @@ location_visited = function(id, location )
         Character.giveXp(client,100)
    
     else  
-        MapClientSession.simple_dialog(client,"location_visited: " .. tostring(location.id) .. " Loc: " .. round2(location.loc.x, 4))
+        MapClientSession.simple_dialog(client,"location_visited: " .. tostring(id) .. " Loc: " .. round2(location.x, 4))
     end
     
     return ""
