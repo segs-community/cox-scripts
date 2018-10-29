@@ -17,10 +17,10 @@ location_visited = function(id, location )
         If you have an associate that can revive you, you may wait for that instead by not clicking OK in the dialog box that appears upon defeat.<br><br>]]
         MapClientSession.simple_dialog(client,message)
     elseif id == 1852042661 then
+
         MapClientSession.simple_dialog(client,"Information Box.")
         Character.giveInf(client, 100);
         Character.giveXp(client,100)
-   
     else  
         MapClientSession.simple_dialog(client,"location_visited: " .. tostring(id) .. " Loc: " .. round2(location.x, 4))
     end
