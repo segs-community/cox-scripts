@@ -1,3 +1,4 @@
+spawned = false
 flintLocation = vec3.new(-62.0, 0.0, 182.0)
 parksLocation = vec3.new(-83.0, 0.0, 1334.0)
 contactId = 0; -- This could be removed if the dialog button included which contact/entity the player was interacting with.
@@ -12,6 +13,11 @@ entity_interact = function(id, location)
 
     contactId = id
 
+    --ForceOrientation test on NPCs spawned on 4th Swat Officer outside hospital.
+    if id >= 303 then
+        MapClientSession.forceOrientation(client, id, vec3.new(-8, 0, 604) )
+        printDebug("Orientation called")
+    end
     if id == 5 then
         contactAvailable(id)
     elseif id == 3 then
@@ -22,8 +28,38 @@ entity_interact = function(id, location)
         contactAvailable(id)
     elseif id == 39 then
         contactAvailable(id)
+    elseif id == 34 then
+        MapClientSession.simple_dialog(client, "Cash always helps.")
+        Character.giveInf(client, 20000);
+        Character.giveXp(client, 500);
+    elseif id == 35 then
+        MapClientSession.simple_dialog(client, "Did you hear something?")
+        if not spawned then
+            local npc1 = vec3.new(-7.9, 0, 609)
+            local npc2 = vec3.new(-7.3, 0, 601)
+            local npc3 = vec3.new(-4.3, 0, 603)
+            local npc4 = vec3.new(-3.6, 0, 607)
+            local faceOri = vec3.new(-8,0,604) -- Should be 4th Swat officer location.
+            MapClientSession.addNpc(client, 'Carnival_Strongman_01', npc1, 1, faceOri)
+            MapClientSession.addNpc(client, 'FRK_24', npc2, 1, faceOri)
+            MapClientSession.addNpc(client, 'Nemesis_Soldier_05', npc3, 1, faceOri)
+            MapClientSession.addNpc(client, 'Rikti_Armour_Lieutenant_05', npc4, 1, faceOri)
+            spawned = true
+        end
+
+    elseif id == 36 then
+        MapClientSession.simple_dialog(client, "Take these to help protect the city.")
+        Character.giveEnhancement(client, "Generic_Accuracy", 5)
+        Character.giveInsp(client, "luck")
+
+    elseif id == 37 then
+        MapClientSession.simple_dialog(client, "You look tried hero. This will help.")
+        Character.giveHp(client, 500)
+        Character.giveEnd(client, 100)
+    elseif id >= 303 then
+        MapClientSession.simple_dialog(client, [[This doesn't concern you "hero".]])
     else
-        MapClientSession.browser(client,"Hello")
+        MapClientSession.simple_dialog(client, "Hello")
     end
     return ""
 end
@@ -47,17 +83,15 @@ end
 
 contact_call = function(contactIndex)
     printDebug("Contact Call. contactIndex: " .. tostring(contactIndex))
-    local index = contactIndex + 1 -- Lua starts indexes at 1
-
-    local contact = vContacts[index]
+    local contact = vContacts[contactIndex + 1]
+       
     if contact.npcId == 1939 then
         contactId = 5
         contactAvailable(5)
     elseif contact.npcId == 1940 then
-        contactId = 3
-        contactAvailable(3)
+        contactId = 2
+        contactAvailable(2)
     end
-
     return ""
 end
 
@@ -80,10 +114,16 @@ function contactAvailable(id)
             flintContact.confidantThreshold = 3
             flintContact.completeThreshold = 4
             flintContact.canUseCell = false
-            Character.addUpdateContactList(client, flintContact, flintLocation)
+            --flintContact.contactId = 500
+            flintContact.location = Destination.new()
+            flintContact.location.pointIdx = 1
+            flintContact.location.location = flintLocation
+            flintContact.location.name = "Outbreak"
+            flintContact.location.mapName =  "Outbreak"
+            Character.addUpdateContactList(client, flintContact)
         end
         officerFlintDialogs(nil)
-    elseif (id == 3 and flintContact.currentStanding >= 1) then
+    elseif (id == 3 and flintContact.currentStanding == 1) then
         drMillerDialogs(nil)
     elseif id == 2 then
         if parksContact == false then
@@ -98,8 +138,13 @@ function contactAvailable(id)
             parksContact.friendThreshold = 2
             parksContact.confidantThreshold = 3
             parksContact.completeThreshold = 4
-            parksContact.canUseCell = true
-            Character.addUpdateContactList(client, parksContact, parksLocation)
+            parksContact.canUseCell = false
+            --parksContact.contactId = 501
+            parksContact.location = Destination.new()
+            parksContact.location.location = parksLocation
+            parksContact.location.name = "Outbreak"
+            parksContact.location.mapName =  "City_00_01"
+            Character.addUpdateContactList(client, parksContact)
         end
         officerParksDialogs(nil)
     elseif id == 38 then
@@ -175,7 +220,10 @@ function officerFlintDialogs(buttonId)
 
     elseif buttonId == 10 then
         flintContact.currentStanding = 4
-        Character.addUpdateContactList(client, flintContact, flintLocation)
+        Character.addUpdateContactList(client, flintContact)
+
+      -- local task = FindTaskByTaskIdx(0)
+        --Character.removeTask(client, task)
 
         message = [[Officer Parks radioed. He needs help fighting off some rioting thugs down the street.<br>
         <img src="npc:1940" align="left"><b>Officer Parks</b><br><br>By selecting Officer Parks as a Contact you can now receive tasks and information from him. 
@@ -190,17 +238,22 @@ function officerFlintDialogs(buttonId)
 
         parksContact = Contact.new()
         parksContact.npcId = 1940
+        --parksContact.contactId = 501
         parksContact.name = "Officer Parks"
         parksContact.currentStanding = 0
         parksContact.notifyPlayer = true
         parksContact.taskIndex = 1
-        parksContact.hasLocation = true
         parksContact.locationDescription = "Outbreak"
         parksContact.friendThreshold = 2
         parksContact.confidantThreshold = 3
         parksContact.completeThreshold = 4
-        parksContact.canUseCell = true
-        Character.addUpdateContactList(client, parksContact, parksLocation)
+        parksContact.canUseCell = false
+        parksContact.hasLocation = true
+        parksContact.location = Destination.new()
+        parksContact.location.location = parksLocation
+        parksContact.location.name = "Outbreak"
+        parksContact.location.mapName =  "City_00_01"
+        Character.addUpdateContactList(client, parksContact)
         
     elseif buttonId == 20 then
         message = ""
@@ -222,8 +275,32 @@ function officerFlintDialogs(buttonId)
         MapClientSession.contact_dialog(client,message,buttons)
     elseif buttonId == 7 then
         flintContact.currentStanding = 1
-        Character.addUpdateContactList(client, flintContact, flintLocation)
+        Character.addUpdateContactList(client, flintContact)
         MapClientSession.sendFloatingInfo(client,5)
+
+       --[[local task1 = Task.new()
+        task1.dbId = m_db_id -- 1939 - 200
+        task1.taskIdx = 0
+        task1.description = "Deliver the serum to Dr. Miller"
+        task1.owner = "Officer Flint"
+        task1.detail = ""
+        task1.state = ""
+        task1.inProgressMaybe = false
+        task1.isComplete = false
+        task1.isAbandoned = false
+        task1.finishTime = 0
+        task1.unknownInt1 = 0
+        task1.unknownInt2 = 0
+        task1.hasLocation = true
+        task1.boardTrain = false
+        task1.location = Destination.new()
+        task1.location.location = vec3.new(20, 0, 586)
+        task1.location.pointIdx = 1000
+        task1.location.name  = "Outbreak"
+        task1.location.mapName = "Outbreak"
+
+        Character.addTask(client, task1)
+        --Character.selectTask(client, task1)]]
 
         message = [[<img src="npc:1939" align="left">Dr. Miller is just down the street. Give him the sample,and see if he has anything further for you.<br><br>
         <color #2189b9>You have been issues a clue. You can learn more about the clue by clicking the Clues button on your Nav window. 
@@ -249,10 +326,17 @@ function drMillerDialogs(buttonId)
             MapClientSession.contact_dialog(client,message,buttons)
         elseif flintContact.currentStanding == 1 then
             flintContact.currentStanding = 2
-            Character.addUpdateContactList(client, flintContact, flintLocation)
+            Character.addUpdateContactList(client, flintContact)
             
             Character.giveXp(client,50)
             Character.giveEnhancement(client,"Generic_Damage",5);
+
+           --[[local task = FindTaskByTaskIdx(0)
+            printDebug(tostring(task))
+
+            task.description = "Read the Terminal in front of Hospital"
+
+            Character.addTask(client, task)]]
 
             message = [[Thank you! This sample will help our reseach immensely.<br><br>Since you are new to paragon city,you should familiarize yourself with the way hospitals work here.            
             <color #2189b9>There is an Information Terminal in front of Rivera Medical Center next to me you need to read.</color>]]
@@ -301,6 +385,12 @@ function officerParksDialogs(buttonId)
                 button4 = {"Leave","CONTACTLINK_BYE"}
             }
             MapClientSession.contact_dialog(client,message,buttons)
+        elseif parksContact.currentStanding == 4 then
+            message = string.format([[<img src="npc:1940" align="left">That's all we have for this tutorial, %s.<br><br>Keep an eye on SEGS Github and Discord for updates.]], heroName)
+            local buttons = {
+                button1 = {"Leave","CONTACTLINK_BYE"}
+            }
+            MapClientSession.contact_dialog(client,message,buttons)
         end
 
     elseif buttonId == 3 then
@@ -320,7 +410,7 @@ function officerParksDialogs(buttonId)
         MapClientSession.contact_dialog(client,message,buttons)
     elseif buttonId == 6 then
         parksContact.currentStanding = 1
-        Character.addUpdateContactList(client, parksContact, parksLocation)
+        Character.addUpdateContactList(client, parksContact)
 
         message = string.format([[<img src="npc:1940" align="left"><br><br>Things are getting out of control, and I can tell you need to learn all about combat, %s.
         First, I want you to learn about how tought things can be by talking to Professor Hoffman in front of the deactivated robots right in front of me.
@@ -335,7 +425,7 @@ function officerParksDialogs(buttonId)
 
     elseif buttonId == 7 then
         parksContact.currentStanding = 2
-        Character.addUpdateContactList(client, parksContact, flintLocation)
+        Character.addUpdateContactList(client, parksContact)
         message = [[<img src="npc:1940" align="left"><br><br>Talk to Professor Hoffman, then Lt. MacReady]]
         local buttons = {
             button1 = {"Leave", "CONTACTLINK_BYE"}
@@ -365,7 +455,7 @@ function professorHoffman(buttonId)
             MapClientSession.contact_dialog(client,message,buttons)
         elseif parksContact.currentStanding ==2 then
             parksContact.currentStanding = 3
-            Character.addUpdateContactList(client, parksContact, parksLocation)
+            Character.addUpdateContactList(client, parksContact)
             message = [[Here we have some deactivated robots. If you left click on them you can target them. 
             This is how you determine which enemy you are attacking.<br><br>You can also Consider (or 'con') your target and note the level difference to your character by the color of the name.
             White names mean they are the same level as yourself, <color #ff9900>Orange names</color> mean they are one level stronger than you, and <color #0000ff>Blue names</color> mean they are one level weaker than you.
@@ -399,7 +489,7 @@ function macReady(buttonId)
             MapClientSession.contact_dialog(client,message,buttons)
         elseif parksContact.currentStanding == 3 then
             parksContact.currentStanding = 4
-            Character.addUpdateContactList(client, parksContact, parksLocation)
+            Character.addUpdateContactList(client, parksContact)
             message = string.format( "So you're %s, eh?", heroName) .. [[ Well, I've been told you need to learn a thing or two about combat. 
             First off, you need to <color #0000ff>Target</color> the enemy you want to attack by clicking on them with your left mouse button, 
             or use the Tab key to cycle targeted enemies.<br><br>Once you have your enemy targeted you can attack them by simply clicking the power in your power tray, 
@@ -440,13 +530,31 @@ end
 function FindContactByNpcId(npcId)
     local contact = false
     printDebug("NpcId to find: " .. npcId)
-   for key, value in pairs(vContacts) do
-        printDebug(tostring(value.npcId))
-        if value.npcId == npcId then
-            printDebug("NpcId found")
-            contact = value
-            break
+    if vContacts ~= nil then
+        for key, value in pairs(vContacts) do
+            printDebug(tostring(value.npcId))
+            if value.npcId == npcId then
+                printDebug("NpcId found")
+                contact = value
+             break
+             end
         end
     end
     return contact
+end
+
+function FindTaskByTaskIdx(taskIdx)
+    local task = false
+    printDebug("Task to find: " .. taskIdx)
+    if vTaskList ~= nil then
+        for key, value in pairs(vTaskList) do
+            printDebug(tostring(value.taskIdx))
+            if value.taskIdx == taskIdx then
+                printDebug("Task found")
+                task = value
+                break
+            end
+        end
+    end
+    return task
 end
