@@ -53,7 +53,7 @@ entity_interact = function(id, location)
         Character.giveInsp(client, "luck")
 
     elseif id == 37 then
-        MapClientSession.simple_dialog(client, "You look tried hero. This will help.")
+        MapClientSession.simple_dialog(client, "You look tired hero. This will help.")
         Character.giveHp(client, 500)
         Character.giveEnd(client, 100)
     elseif id >= 303 then
@@ -161,7 +161,7 @@ function officerFlintDialogs(buttonId)
         if flintContact.currentStanding == 0 then
             local message = [[<img src="npc:1939" align="left"><br><br>We have a crisis going on here, and we need help desperately. 
             Some thugs took an experimental drug thinking it was something else, and now they're trashing the area.
-            We have to regain control to ensure the safey of the citizens.<br><br>
+            We have to regain control to ensure the safety of the citizens.<br><br>
             <color #2189b9>Click on "Ask about available missions" to proceed.</color><br><br><br>]]
             local buttons = {
                 button1 = {"Ask about available missions","CONTACTLINK_MISSIONS"},
@@ -184,7 +184,7 @@ function officerFlintDialogs(buttonId)
             MapClientSession.contact_dialog(client,message,buttons)
         elseif flintContact.currentStanding == 3 then
             message = string.format([[<img src="npc:1939" align="left"><br>Excellent job. What did you call yourself again? Was it %s? That's pretty original. 
-            You seem to navigate well,so let me tell you about the Map. 
+            You seem to navigate well, so let me tell you about the Map. 
             Click the Map Button to bring up an overhead view of the zone.<br><br><img src=Tut_Menu_Map.tga><br><br>
             <color #2189b9>Click on any item on the map to target it. The target appears on your compass.</color>]],heroName)
             local buttons = {
@@ -227,7 +227,7 @@ function officerFlintDialogs(buttonId)
 
         message = [[Officer Parks radioed. He needs help fighting off some rioting thugs down the street.<br>
         <img src="npc:1940" align="left"><b>Officer Parks</b><br><br>By selecting Officer Parks as a Contact you can now receive tasks and information from him. 
-        When your current Contact is happy with your work and can trust you, they will introduce you to their friends,who in turn will have more work that needs to get done.<br><br>
+        When your current Contact is happy with your work and can trust you, they will introduce you to their friends, who in turn will have more work that needs to get done.<br><br>
         Use this to keep adding new Contacts as you adventure in Paragon City.]]
         local buttons = {  
             button1 = {"Talk about what else is going on","CONTACTLINK_ABOUT"},
@@ -302,9 +302,9 @@ function officerFlintDialogs(buttonId)
         Character.addTask(client, task1)
         --Character.selectTask(client, task1)]]
 
-        message = [[<img src="npc:1939" align="left">Dr. Miller is just down the street. Give him the sample,and see if he has anything further for you.<br><br>
-        <color #2189b9>You have been issues a clue. You can learn more about the clue by clicking the Clues button on your Nav window. 
-        Whenever you are issues new Clues, you can read more about them there as well.</color><br>]]
+        message = [[<img src="npc:1939" align="left">Dr. Miller is just down the street. Give him the sample, and see if he has anything further for you.<br><br>
+        <color #2189b9>You have been issued a clue. You can learn more about the clue by clicking the Clues button on your Nav window. 
+        Whenever you are issued new Clues, you can read more about them there as well.</color><br>]]
         local buttons = {
             button1 = {"Ask about this contact", "CONTACTLINK_ABOUT"},
             button2 = {"",""},
@@ -338,7 +338,7 @@ function drMillerDialogs(buttonId)
 
             Character.addTask(client, task)]]
 
-            message = [[Thank you! This sample will help our reseach immensely.<br><br>Since you are new to paragon city,you should familiarize yourself with the way hospitals work here.            
+            message = [[Thank you! This sample will help our reseach immensely.<br><br>Since you are new to Paragon City, you should familiarize yourself with the way hospitals work here.            
             <color #2189b9>There is an Information Terminal in front of Rivera Medical Center next to me you need to read.</color>]]
             local buttons = {
                 button1 = {"Leave","CONTACTLINK_BYE"}
@@ -352,7 +352,7 @@ function drMillerDialogs(buttonId)
             }
             MapClientSession.contact_dialog(client,message,buttons)
         elseif flintContact.currentStanding == 3 then
-            message = [[Talk to Officer flint. I think he has something more for you.]] 
+            message = [[Talk to Officer Flint. I think he has something more for you.]] 
             local buttons = {
                 button1 = {"Leave","CONTACTLINK_BYE"}
             }
@@ -399,8 +399,8 @@ function officerParksDialogs(buttonId)
 
     elseif buttonId == 4 then
         message = string.format([[<img src="npc:1940" align="left"><br><br>Things are getting out of control, and I can tell you need to learn all about combat, %s.
-        First, I want you to learn about how tought things can be by talking to Professor Hoffman in front of the deactivated robots right in front of me.
-        Then talk to Lt. MacReady for your combat lesson, then I want you to com back and talk to me.]], heroName )
+        First, I want you to learn about how tough things can be by talking to Professor Hoffman in front of the deactivated robots right in front of me.
+        Then talk to Lt. MacReady for your combat lesson, then I want you to come back and talk to me.]], heroName )
         local buttons = {
             button1 = {"Click here to accept this task" ,"CONTACTLINK_ACCEPTLONG"},
             button2 = {"Talk about what else is going on","CONTACTLINK_ABOUT"},
