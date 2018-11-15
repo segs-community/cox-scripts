@@ -1,0 +1,351 @@
+This is a snipit of a massive text file made from a issue223 powers.bin, translated by this tool:
+https://github.com/ovekaaven/cohtools
+
+compare the names from "StoredAttribMod" in this file:
+https://github.com/Segs/Segs/blob/develop/Projects/CoX/Common/GameData/power_definitions.h
+
+Unfortuntely most of the values are labeled "Unknown" but I have made some notes as to what I think they are after the **
+
+Name "Controller_Buff.Storm_Summoning.O2_Boost"
+
+  Unknown1
+    unknown "Heal"          **"name"
+    unknown "P2736283525"   **description on client side
+    unknown "P3172217792"
+    unknown ""
+    unknown 0
+    unknown 1
+    unknown 28              ** attribute modified
+    unknown 16          **"AttribMod_Aspect"how the stat is modified, 8=strength 12=resistance
+    unknown 0
+    unknown 4
+    unknown "Ranged_Heal"
+    unknown 1.320000        ** "scale" of damage/effect, multiplied by level and stuff
+    unknown 0
+    unknown 1
+    unknown 0.000000
+    unknown 0.000000
+    unknown 1.000000
+    unknown 0
+    unknown 0
+    unknown 1           ** autohit maybe? maybe stack type
+    unknown 1           ** ??? 0 for buff/debuff
+    unknown 1           ** ??? 0 for buff/debuff
+    unknown 0
+    unknown 1
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown  0
+    unknown 2
+    unknown -1
+    unknown 0.000000    ** "duration" in seconds
+    unknown 1.000000
+    unknown -1.000000
+    unknown -1.000000
+    unknown ""
+    unknown ""          *pfx?
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0.000000
+  EndUnknown1
+  Unknown1
+    unknown "Res_Boolean"
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 1
+    unknown 276
+    unknown 0
+    unknown 0
+    unknown 4
+    unknown "Ranged_Res_Boolean"
+    unknown -20.000000
+    unknown 0
+    unknown 1
+    unknown 0.000000
+    unknown 0.000000
+    unknown 1.000000
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 2
+    unknown -1
+    unknown  60.000000
+    unknown 1.000000
+    unknown -1.000000
+    unknown -1.000000
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0.000000
+  EndUnknown1
+           **there were several more of the above, one for each resistance bonus
+  
+
+thermal shield for comparison
+
+  Unknown1
+    unknown "Res_Dmg"
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 1
+    unknown 0 *smash?
+    unknown 12 *dmg res
+    unknown 0 
+    unknown 4
+    unknown "Ranged_Res_Dmg"
+    unknown 2.000000
+    unknown 0
+    unknown 1
+    unknown 0.000000
+    unknown 0.000000
+    unknown 1.000000
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 3
+    unknown 2
+    unknown -1
+    unknown 240.000000
+    unknown 1.000000
+    unknown -1.000000
+    unknown -1.000000
+    unknown ""
+    unknown "PFX"
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0.000000
+  EndUnknown1
+  Unknown1
+    unknown "Res_Dmg"
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 1
+    unknown 4 *lethal?
+    unknown 12 *res
+    unknown 0
+    unknown 4
+    unknown "Ranged_Res_Dmg"
+    unknown 2.000000
+    unknown 0
+    unknown 1
+    unknown 0.000000
+    unknown 0.000000
+    unknown 1.000000
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 3
+    unknown 2
+    unknown -1
+    unknown 240.000000
+    unknown 1.000000
+    unknown -1.000000
+    unknown -1.000000
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0.000000
+  EndUnknown1
+  Unknown1
+    unknown "Res_Dmg"
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 1
+    unknown 8 * fire!
+    unknown 12
+    unknown 0
+    unknown 4
+    unknown "Ranged_Res_Dmg"
+    unknown 2.000000
+    unknown 0
+    unknown 1
+    unknown 0.000000
+    unknown 0.000000
+    unknown 1.000000
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 3
+    unknown 2
+    unknown -1
+    unknown 240.000000
+    unknown 1.000000
+    unknown -1.000000
+    unknown -1.000000
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0.000000
+  EndUnknown1
+  Unknown1
+    unknown "Res_Dmg"
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 1
+    unknown 12 * cold
+    unknown 12
+    unknown 0
+    unknown 4
+    unknown "Ranged_Res_Dmg"
+    unknown 1.000000
+    unknown 0
+    unknown 1
+    unknown 0.000000
+    unknown 0.000000
+    unknown 1.000000
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 1
+    unknown 1
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 3
+    unknown 2
+    unknown -1
+    unknown 240.000000
+    unknown 1.000000
+    unknown -1.000000
+    unknown -1.000000
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown ""
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0
+    unknown 0.000000
+  EndUnknown1

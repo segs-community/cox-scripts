@@ -1,30 +1,26 @@
 
-location_visited = function(id, location )
-   printDebug("Location Id: " .. tostring(id) .. " X: " .. round2(location.x, 4) .. " Y: " .. round2(location.y, 4) .. " Z: " .. round2(location.z, 4))
+location_visited = function(name, location )
+   printDebug("Location name: " .. name .. " Loc X: " .. round2(location.x, 4) .. " Y: " .. round2(location.y, 4) .. " Z: " .. round2(location.z, 4))
    
    vec3Test = vec3.new(round2(location.x, 4), round2(location.y, 4), round2(location.z, 4))
    Character.faceLocation(client.m_ent, vec3Test) 
 
    flintContact = FindContactByNpcId(1939) -- If parks used a location, his object would need to be updated here.
 
-    if(id == 1518617916 and flintContact.currentStanding == 2) then
-        flintContact.currentStanding = 3
-        flintContact.canUseCell = true
-        Character.addUpdateContactList(client, flintContact, flintLocation)
-        Character.giveInsp(client,"awaken");
-        message = [[<td align=center><b>Medicom and Defeat</b></td><br><br><br>
-        The Medicom is a state of the art analysis and healing device. It will analyze the current medical status of a friendly target and teleport them to the nearest hospital upon defeat. Equipping every Hero with a Medicom patch is the only thing keeping Paragon City from being overrun.<br><br>
-        If you have an associate that can revive you, you may wait for that instead by not clicking OK in the dialog box that appears upon defeat.<br><br>]]
-        MapClientSession.simple_dialog(client,message)
-    elseif id == 1852042661 then
-
-        MapClientSession.simple_dialog(client,"Information Box.")
-        Character.giveInf(client, 100);
-        Character.giveXp(client,100)
-    else  
-        MapClientSession.simple_dialog(client,"location_visited: " .. tostring(id) .. " Loc: " .. round2(location.x, 4))
-    end
-    
+   if (name == 'TutorialConningPlaque2' and flintContact.currentStanding == 2) then
+       flintContact.currentStanding = 3
+       flintContact.canUseCell = true
+       Character.addUpdateContactList(client, flintContact, flintLocation)
+       Character.giveInsp(client,"awaken");
+       message = [[<td align=center><b>Medicom and Defeat</b></td><br><br><br>
+       The Medicom is a state of the art analysis and healing device. It will analyze the current medical status of a friendly target and teleport them to the nearest hospital upon defeat. Equipping every Hero with a Medicom patch is the only thing keeping Paragon City from being overrun.<br><br>
+       If you have an associate that can revive you, you may wait for that instead by not clicking OK in the dialog box that appears upon defeat.<br><br>]]
+       MapClientSession.simple_dialog(client,message)
+   elseif name == 'TutorialConningPlaque1' then
+       MapClientSession.simple_dialog(client,"Information Box.")
+       Character.giveInf(client, 100);
+       Character.giveXp(client,100)
+   end
     return ""
 end
 
