@@ -1,4 +1,7 @@
-           [ {
+{
+    "Powers": {
+        "Categories": [
+           {
                 "Name": "Inspirations",
                 "DispName": "P1356367499",
                 "DispShortHelp": "",
@@ -635,8 +638,9 @@
 }]
                             }
                         ]
-                    },
-
+                    }
+                ]
+            },
             {
                 "Name": "Inherent",
                 "DispName": "P2894237575",
@@ -760,7 +764,7 @@
         "Chance": "1.00",
         "StackType": "Stack"
 }]
-                            },
+                    },
                             {
                                 "Name": "prestige_generic_Sprintp",
                                 "DisplayName": "P3018994368",
@@ -860,5 +864,12 @@
         "Period": "0",
         "Chance": "1.00",
         "StackType": "replace"
-}]
-                            },
+                      }
+             ]
+      }]
+                }
+
+                ]}
+        ]
+    }
+}
