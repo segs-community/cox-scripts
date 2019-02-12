@@ -10,13 +10,21 @@ To Install
 NOTE: The Spawndefs folder should be under DefaultMapInstances, not the City_00_01 folder.
 
 
-To Use
+To Use (Outbreak)
 
-1. Enter the game and go to Officer Parks using /moveto -85 0 1330
+1. Enter Outbreak and go to Officer Parks using /moveto -85 0 1330
 2. Speak with him and then observe the training area as it dynamically spawns. 
 3. Move SW to observe the nearby contaminated area.
 	--Four pairs of hostile contaminated should have dynamically spawned here.
 	--A custom template may cause a victim to appear in some encounters.
+
+To Use (Independence Port)
+
+1. Enter Independence Port and use /addnpc Model_Statesman to create a new NPC.
+2. Speak with your spawned NPC and dismiss the popup. 
+3. Use /moveto 940 115 -2770.
+	--Three encounters of mixed Family vs. Freaks packs should spawn here.
+	--These encounters are dynamic in both size and composition; repeat your attempts to see.
 
 To Modify
 
