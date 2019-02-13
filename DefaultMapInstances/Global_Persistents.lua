@@ -1,9 +1,10 @@
 local All_Persistents = {
         ["Sergeant_Hicks"] = "Model_SergeantHicks",
-        ["Officer_Parks"] =	"Model_OfficerParks",
-        ["Doctor_Miller"] =	"Model_DoctorMiller",
-        ["Detective_Wright"] ="Model_DetectiveWright",
-        ["Officer_Flint"] =	"Model_OfficerFlint",
+        ["Officer_Parks"] = "Model_OfficerParks",
+        ["Doctor_Miller"] = "Model_DoctorMiller",
+        ["Detective_Wright"] = "Model_DetectiveWright",
+        ["Officer_Flint"] = "Model_OfficerFlint",
+        ["Lt_MacReady"] = "CSE_01",
         ["Paragon_SWAT"] = "MaleNPC_230",
         ["Professor_Hoffman"] = "Model_ProfessorHoffman",
         ["Laurence_Mansfield"] = "Model_LaurenceMansfield",
@@ -11,18 +12,18 @@ local All_Persistents = {
         ["Sarah_Juarez"] = "Model_SarahJuarez",
         ["Security_Chief_01"] =	"MaleNPC_230",
         ["Security_Chief_04"] =	"MaleNPC_231",
-        ["City_Representative"] =	"Model_CityRepresentative",
+        ["City_Representative"] = "Model_CityRepresentative",
         ["SuperGroupRegistrar"] = "MaleNPC_01",
-        ["Charlie"] =	"Model_Charlie",
+        ["Charlie"] = "Model_Charlie",
         ["Susan_Davies"] = "Model_SusanDavies",
         ["Antonio_Nash"] = "Model_AntonioNash",
-        ["Rick_Davies"] =	"Model_RickDavies",
-        ["Jonathan_Smythe"] =	"Model_JonathanSmythe",
-        ["Azuria"] =	"Model_Azuria",
-        ["MsLiberty"] =	"Model_MsLiberty",
-        ["Tony_Kord"] =	"Model_TonyKord",
-        ["Jose_Brogan"] =	"Model_JoseBrogan",
-        ["Sarah_Peters"] =	"Model_SarahPeters",
+        ["Rick_Davies"] = "Model_RickDavies",
+        ["Jonathan_Smythe"] = "Model_JonathanSmythe",
+        ["Azuria"] = "Model_Azuria",
+        ["MsLiberty"] = "Model_MsLiberty",
+        ["Tony_Kord"] = "Model_TonyKord",
+        ["Jose_Brogan"] = "Model_JoseBrogan",
+        ["Sarah_Peters"] = "Model_SarahPeters",
         ["FreedomCorp_City_01_01"] = "Model_Freedom_Corp_Store_NPC_01",
         ["FreedomCorp_City_01_03"] = "Model_Freedom_Corp_Store_NPC_03",
         ["FreedomCorp_City_01_01c"] = "Model_Freedom_Corp_Store_NPC_01",
@@ -222,5 +223,11 @@ local All_Persistents = {
 }
 
 function GetPersistentModel(npc)
-        return All_Persistents[npc]
+        local Model = All_Persistents[npc]
+
+        if Model == nil or "" then
+                return "ChessPawn"
+        end
+
+        return Model    --default
 end
